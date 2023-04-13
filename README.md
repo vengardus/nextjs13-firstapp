@@ -32,7 +32,8 @@ components/
         <Component>.jsx
 
 ### SpaceXPage
-Show a list of Launches and launch details 
+Show a list of Launches and launch details from SpaceX's Api: 
+'https://api.spacexdata.com/v3/launches'
 
 #### Images with <Image /> component
 Add in next.config.js:

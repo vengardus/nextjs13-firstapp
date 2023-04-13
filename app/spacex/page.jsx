@@ -1,4 +1,4 @@
-import Launches from '@/components/spacex/Launches'
+import { Launches } from '@/components/spacex/Launches'
 import React from 'react'
 
 const SpaceXPage = () => {
