@@ -5,4 +5,4 @@ export const urlLaunches = {
   one: 'https://api.spacexdata.com/v3/launches/'
 }
 
-export const getUrl = (flight_number) => `${urlLaunches.one}${flight_number}`
+export const getUrlOne = (flight_number) => `${urlLaunches.one}${flight_number}`

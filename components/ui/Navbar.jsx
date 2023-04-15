@@ -29,8 +29,7 @@ const Navbar = () => {
 
   return (
     <>
-    {console.log('ed', {menuItems})}
-    <div className='flex'>
+     <div className='flex'>
        { menuItems }
     </div>
     </>

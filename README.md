@@ -1,4 +1,5 @@
-# First Proyect NextJs v13 (beta)
+# First App NextJs v13 (beta) by Gardus
+I'm currently learning the Beta version of NextJs 13 and will be practicing and adding code.
 
 ## Requirements:
 - Node v16.8 or later
@@ -30,12 +31,13 @@ components/
         Navbar.jsx
     <functionality>
         <Component>.jsx
+hooks/      (hooks generales)
 
-### SpaceXPage
+### Page: SpaceXPage
 Show a list of Launches and launch details from SpaceX's Api: 
 'https://api.spacexdata.com/v3/launches'
 
-#### Images with <Image /> component
+#### Settings hostname to work images with <Image> component
 Add in next.config.js:
 ```
 images: {
@@ -49,3 +51,6 @@ images: {
     ],
   },
 ```
+
+#### Install react-player to show videos
+yarn add react-player
