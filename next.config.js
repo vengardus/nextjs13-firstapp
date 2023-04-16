@@ -9,7 +9,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images2.imgbox.com',
         port: '',
-        pathname: '/**',
+        pathname: '/**/**',
       },
     ],
   },

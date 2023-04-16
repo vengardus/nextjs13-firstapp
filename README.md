@@ -29,9 +29,14 @@ app/
 components/
     <ui>
         Navbar.jsx
+        ...
     <functionality>
         <Component>.jsx
 hooks/      (hooks generales)
+public/
+  assets/
+    img/
+
 
 ### Page: SpaceXPage
 Show a list of Launches and launch details from SpaceX's Api: 
@@ -51,6 +56,11 @@ images: {
     ],
   },
 ```
+* Local images must be placed inside the 'public' folder, and then in the component's 'src' property, the path should be relative to the 'public' folder, e.g. '/assets/img/myImage.jpg'.
 
 #### Install react-player to show videos
-yarn add react-player
+yarn add react-player latest
+
+#### Install @headlessui/react (used in Navbar component)
+yarn add @headlessui/react latest
+
