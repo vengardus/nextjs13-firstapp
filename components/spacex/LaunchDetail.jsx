@@ -2,7 +2,6 @@
 import Image from "next/image"
 import Link from "next/link"
 import ReactPlayer from "react-player"
-// import { useGetFetch } from "@/mylib/fetch"
 import { useHasWindow } from "@/hooks/useHasWindow"
 import { getUrlOne } from "./data"
 import { useGetFetch } from "@/hooks/useFetch"

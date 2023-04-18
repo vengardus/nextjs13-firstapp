@@ -4,32 +4,10 @@ import Image from 'next/image'
 import { useState } from 'react'
 import Link from 'next/link'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
+import { navigation } from './data'
 
 const logo = '/assets/img/logo-gardus.png'
-const navigation = [
-  {
-    name: 'Inicio',
-    href: '/',
-  },
-  {
-    name: 'Apis',
-    href: '#',
-    children: [
-      {
-        name: 'SpaceX',
-        href: '/spacex',
-      },
-      {
-        name: 'Producto 2',
-        href: '#',
-      },
-    ],
-  },
-  {
-    name: 'About',
-    href: '/about',
-  },
-]
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')

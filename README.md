@@ -135,3 +135,10 @@ source ~/.bashrc
 
 7. Ahora deberías ser capaz de ejecutar el comando vercel sin problemas.
 
+
+## Context
+Enables managing variables globally among components.
+
+/context/TaskContext.js
+
+
