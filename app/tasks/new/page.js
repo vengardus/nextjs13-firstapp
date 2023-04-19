@@ -1,9 +1,12 @@
-import { TasksNew } from "@/components/tasks/TaskNew"
+import { TasksForm } from "@/components/tasks/TaskForm"
 
-const TasksNewPage = () => {
+const TasksFormPage = ( { params } ) => {
   return (
-    <TasksNew />
+    <TasksForm 
+      action={ params.id? 'edit' : 'new' } 
+      id={ params.id }
+    />
   )
 }
 
-export default TasksNewPage
+export default TasksFormPage

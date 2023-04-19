@@ -86,7 +86,7 @@ yarn build
 
 2. Deploy to Vercel
 ```
-vercel
+vercel 
 ```
 Select Log in to Vercel : 
 Continue with Github
@@ -105,6 +105,7 @@ Want to modify these settings [Y/n] N
 Ready!!!
 Link url-production 
 
+3. Next time: vercel --prod
 
 ### Note!!!
 Si instalaste Vercel utilizando el comando yarn global add vercel y al ejecutar el comando vercel en la terminal obtienes el mensaje de "orden no encontrada", es posible que el directorio donde Yarn almacena los paquetes globales no se encuentre en tu PATH.

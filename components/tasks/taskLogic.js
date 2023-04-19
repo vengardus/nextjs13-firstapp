@@ -18,13 +18,31 @@ export const taskValidate = ( { task } ) => {
     return [ ok, msg ]
 }
 
-export const taskPostValidate = ({ task }) => {
-    task.id = uuid()
-    task.completed = false
+export const taskPostValidate = ({ task, action }) => {
+    if ( action === 'new') {
+        task.id = uuid()
+        task.completed = false
+    }
     return true
 }
 
 export const taskDeleteById = ({ tasks, id }) => {
     const newTasks = tasks.filter((task) => task.id !== id)
     return newTasks
+}
+
+export const getTask = ( { tasks, id } ) => {
+    const task = tasks.find(task => task.id == id)
+    return task
+}
+
+export const taskUpdateById = ( { tasks, task }) => {
+    const pos = tasks.findIndex((x) => x.id == task.id)
+    let tasksUpdate = null
+    if ( pos != -1 ) {
+        tasksUpdate = [ ...tasks ]
+        tasksUpdate[pos] = task
+    }
+
+    return tasksUpdate
 }

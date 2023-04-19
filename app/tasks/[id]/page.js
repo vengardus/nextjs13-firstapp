@@ -1,10 +1,4 @@
-import React from 'react'
+import TasksEditPage from "../new/page"
 
-const TaskEditPage = ({ params }) => {
-  const id = params.id
-  return (
-    <div>TaskEditPage {id}</div>
-  )
-}
+export default TasksEditPage
 
-export default TaskEditPage

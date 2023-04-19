@@ -10,7 +10,6 @@ export const TasksList = () => {
   const router = useRouter()
 
   const handleNew = () => {
-    console.log('new')
     router.push('/tasks/new')
   }
 
