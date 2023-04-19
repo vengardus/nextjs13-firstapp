@@ -21,6 +21,10 @@ export const taskValidate = ( { task } ) => {
 export const taskPostValidate = ({ task }) => {
     task.id = uuid()
     task.completed = false
-    return task
+    return true
 }
 
+export const taskDeleteById = ({ tasks, id }) => {
+    const newTasks = tasks.filter((task) => task.id !== id)
+    return newTasks
+}

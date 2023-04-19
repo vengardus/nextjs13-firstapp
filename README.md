@@ -1,6 +1,6 @@
 # First App NextJs v13 (beta) by Gardus
 I'm currently learning the Beta version of NextJs 13 and will be practicing and adding code.
-url: https://nextjs13-firstproject.vercel.app/
+* url: https://nextjs13-firstproject.vercel.app/
 
 ## Enviroment
 Ubuntu 22.04
@@ -77,12 +77,14 @@ yarn global add vercel
 vercel --version
 ```
 
-### Build project
+
+### Deploying to Vercel
+1. Build Project
 ```
 yarn build
 ```
 
-### Deploying to Vercel
+2. Deploy to Vercel
 ```
 vercel
 ```

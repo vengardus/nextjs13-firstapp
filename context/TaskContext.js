@@ -20,7 +20,17 @@ export const TaskProvider = ({ children }) => {
         return true
     }
 
-    return <TaskContext.Provider value= {  { tasks, createTask } } >
+    const deleteTask = ({ newTasks }) => {
+        setTasks( newTasks )
+        return true
+    }
+
+    return <TaskContext.Provider 
+                value= {  {
+                    tasks, 
+                    createTask, 
+                    deleteTask,
+                } } >
         { children }
     </TaskContext.Provider>
 }
