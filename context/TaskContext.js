@@ -1,17 +1,18 @@
 'use client'
-import { createContext, useContext, useState } from "react";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const TaskContext = createContext()
 
 export const useTask = () => {
     const context = useContext(TaskContext)
-    if ( !context ) 
+    if (!context)
         throw new Error('useTask must used within a provider.')
     return context
 }
 
 export const TaskProvider = ({ children }) => {
-    const [ tasks, setTasks ] = useState( [] )
+    const [ tasks, setTasks, loading] = useLocalStorage( { key:'tasks', initialState:[] })
 
     const createTask = ({ task }) => {
         setTasks((currentTasks) => (
@@ -21,22 +22,23 @@ export const TaskProvider = ({ children }) => {
     }
 
     const deleteTask = ({ newTasks }) => {
-        setTasks( newTasks )
+        setTasks(newTasks)
         return true
     }
 
-    const updateTask = ( { newTasks }) => {
-        setTasks( newTasks )
+    const updateTask = ({ newTasks }) => {
+        setTasks(newTasks)
         return true
     }
 
-    return <TaskContext.Provider 
-                value= {  {
-                    tasks, 
-                    createTask, 
-                    deleteTask,
-                    updateTask
-                } } >
-        { children }
+    return <TaskContext.Provider
+        value={{
+            tasks,
+            createTask,
+            deleteTask,
+            updateTask,
+            loading
+        }} >
+        {children}
     </TaskContext.Provider>
 }

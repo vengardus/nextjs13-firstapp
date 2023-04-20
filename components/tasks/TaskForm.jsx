@@ -3,7 +3,8 @@ import { Button } from '@/components/ui/Button'
 import { useTask } from '@/context/TaskContext'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { taskValidate, taskPostValidate, getTask, taskUpdateById } from "@/components/tasks/taskLogic";
+import { getTask, taskPreCreate, taskPreUpdate } from "@/components/tasks/taskLogic";
+import { ACTIONS } from '@/app/data'
 
 export const TasksForm = ({ action, id }) => {
   const { tasks, createTask, updateTask } = useTask()
@@ -14,73 +15,90 @@ export const TasksForm = ({ action, id }) => {
     description: ''
   })
 
+  // Carga task si action es update
   useEffect(() => {
-    // Carga task si action es 'edit'
-    if (action == 'edit') {
+    if (action == ACTIONS.update) {
       const task = getTask({ tasks, id })
       if (task) setTaskInput(task)
     }
   }, [])
 
   const handleChange = (e) => {
+    e.preventDefault()
     setTaskInput((taskCurrent) => ({
       ...taskCurrent,
       [e.target.name]: e.target.value
     }))
   }
 
+  const handleCancel = (e) => {
+    e.preventDefault()
+    router.push('/tasks')
+    e.stopPropagation()
+  }
+
+  const showMsg = (value) => {
+    setMsg(value)
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const task = { ...taskInput }
-    const [ok, msg] = taskValidate({ task })
-    if (!ok) {
-      setMsg(msg)
+    // create
+    if (action == ACTIONS.create) {
+      if (taskPreCreate({ task, showMsg, action })) {
+        createTask({ task })
+        router.push('/tasks')
+      }
       return
     }
-    if (!taskPostValidate({ task, action })) {
-      setMsg('Ocurrió un error en PostValidate')
-      return
-    }
-
-    if (action === 'new') {
-      createTask({ task })
+    // update
+    const newTasks = taskPreUpdate({ tasks, task, showMsg, action })
+    if (newTasks) {
+      updateTask({ newTasks })
       router.push('/tasks')
       return
     }
-    // es edit
-    const newTasks = taskUpdateById({ tasks, task })
-    if ( !newTasks ) {
-      setMsg('Error al actualizar, no se encontró elemento')
-      return
-    }
-    updateTask({ newTasks })
-    router.push('/tasks')
   }
 
   return (
-    <form className='flex flex-col space-y-3 m-3'>
-      <label>Título:</label>
-      <input
-        name={'title'}
-        id={'title'}
-        value={taskInput.title}
-        className='text-black'
-        onChange={handleChange}
-        required
-      />
-      <label>Descrpción:</label>
-      <input
-        name={'description'}
-        value={taskInput.description}
-        onChange={handleChange}
-        className='text-black'
-        required
-      />
-      <p className='text-red-500 bg-white1'>{msg}</p>
-      <Button handleClick={handleSubmit}>
-        Grabar
-      </Button>
-    </form>
+    <div className='flex justify-center my-7'>
+      <form onSubmit={(e)=> e.preventDefault() } className='flex flex-col space-y-3 m-3 w-4/5 md:w-3/5 bg-gray-800 p-5'>
+        <label className='flex place-self-start'>Título:</label>
+        <input
+          name={'title'}
+          id={'title'}
+          value={taskInput.title}
+          className='text-black px-2'
+          onChange={handleChange}
+          
+        />
+        <label>Descrpción:</label>
+        <input
+          name={'description'}
+          value={taskInput.description}
+          onChange={handleChange}
+          className='text-black px-2'
+          
+        />
+        <p className='text-red-500'>{msg}</p>
+        <div className='flex space-x-10 justify-end pt-3'>
+          <button
+            type='button'
+            onClick={ handleCancel }
+            className='hover:text-red-400'
+          >
+            Regresar
+          </button>
+          
+          <Button 
+            handleClick={handleSubmit}
+          >
+            Grabar
+          </Button>
+        </div>
+      </form>
+    </div>
   )
 }
 

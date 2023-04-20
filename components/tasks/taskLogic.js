@@ -1,3 +1,4 @@
+import { ACTIONS } from '@/app/data';
 import { v4 as uuid } from 'uuid';
 
 export const taskValidate = ( { task } ) => {
@@ -19,30 +20,56 @@ export const taskValidate = ( { task } ) => {
 }
 
 export const taskPostValidate = ({ task, action }) => {
-    if ( action === 'new') {
+    if ( action === ACTIONS.create ) {
         task.id = uuid()
         task.completed = false
     }
     return true
 }
 
-export const taskDeleteById = ({ tasks, id }) => {
-    const newTasks = tasks.filter((task) => task.id !== id)
-    return newTasks
-}
-
 export const getTask = ( { tasks, id } ) => {
-    const task = tasks.find(task => task.id == id)
-    return task
+    const task = tasks.filter((task) => task.id == id)
+    return task? task[0] : null
 }
 
-export const taskUpdateById = ( { tasks, task }) => {
-    const pos = tasks.findIndex((x) => x.id == task.id)
-    let tasksUpdate = null
-    if ( pos != -1 ) {
-        tasksUpdate = [ ...tasks ]
-        tasksUpdate[pos] = task
+export const taskPreCreate = ( { task, action, showMsg }) => {
+    const [ok, msg] = taskValidate({ task })
+
+    if ( !ok ) {
+      showMsg( msg )
+      return false
+    }
+    if ( !taskPostValidate({ task, action }) ) {
+      showMsg( 'Ocurrió un error en PostValidate' )
+      return false
     }
 
-    return tasksUpdate
+    return true
+}
+
+export const taskPreUpdate = ( { tasks, task, showMsg, action }) => {
+    const [ok, msg] = taskValidate({ task })
+
+    if ( !ok ) {
+      showMsg( msg )
+      return false
+    }
+    if ( !taskPostValidate({ task, action }) ) {
+      showMsg( 'Ocurrió un error en PostValidate' )
+      return false
+    }
+
+    const newTasks = tasks.map((x) => (
+        (x.id == task.id)? task : x
+    ))
+    if ( !newTasks ) 
+      setMsg('Error al actualizar, no se encontró elemento')
+    
+    return newTasks
+    
+}
+
+export const taskPreDelete = ({ tasks, id }) => {
+    const newTasks = tasks.filter((task) => task.id !== id)
+    return newTasks
 }

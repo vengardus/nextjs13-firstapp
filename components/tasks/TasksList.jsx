@@ -6,7 +6,7 @@ import { TasksItem } from "./TasksItem"
 import { Button } from "../ui/Button"
 
 export const TasksList = () => {
-  const { tasks } = useTask()
+  const { tasks, loading } = useTask()
   const router = useRouter()
 
   const handleNew = () => {
@@ -15,15 +15,31 @@ export const TasksList = () => {
 
   return (
     <section className="flex flex-col p-4 space-y-5">
-      <h1 className="text-2xl font-bold flex justify-center">Tareas</h1>
-      <Button handleClick={ handleNew }>Nueva</Button>
-      <div className="flex flex-col space-y-5 items-center">
-        {
-          tasks.map(task => (
-            <TasksItem key={task.id} task={task} />
-          ))
-        }
+      <div className="flex space-x-7 items-center justify-center">
+        <h1 className="text-4xl font-bold flex justify-center">Tareas</h1>
+        <Button handleClick={handleNew} className={'flex space-x-3 px-2'}
+        >
+          <span>Nueva</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+        </Button>
       </div>
+      {
+        loading
+          ? <div>Loading...</div>
+          :
+          !tasks.length
+          ? <div className="flex justify-center pt-3">No hay tareas</div>
+          :
+          <div className="flex flex-col space-y-5 items-center pt-3">
+            {
+              tasks.map(task => (
+                <TasksItem key={task.id} task={task} />
+              ))
+            }
+          </div>
+      }
     </section>
   )
 }
