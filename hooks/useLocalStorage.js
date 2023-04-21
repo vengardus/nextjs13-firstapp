@@ -7,9 +7,10 @@ export default function useLocalStorage( { key, initialState }) {
     // localStorage.getItem
     useEffect(() => {
         const items = localStorage.getItem(key)
-        const tasks = JSON.parse(items)
-        if (tasks.length)
+        if ( items ) {
+            const tasks = JSON.parse(items)
             setState(tasks)
+        }
         setLoading( false)
     }, [])
 

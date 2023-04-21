@@ -12,10 +12,11 @@ export const LaunchesItem = ({ launch }) => {
         <Image
           src={launch.links.mission_patch_small}
           alt={'img'}
-          width={70}
-          height={70}
+          width={40}
+          height={40}
           priority={true}
-          className='round-50'
+          className='round-50 cover'
+          quality={100}
         />
       </div>
       <div className='w-2/12 text-center hover:text-orange-500'>
