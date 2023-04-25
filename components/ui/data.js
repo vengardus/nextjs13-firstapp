@@ -38,6 +38,15 @@ export const navigation = [
       isProject:true
     },
     {
+      name: 'Tasks-Api',
+      href: '/tasksapi',
+      title: 'Tasks fetch Api',
+      description: 'Registro de tareas llamando Api',
+      detail:'Utiliza la api de la app django-crud-api',
+      image:'tasks3.jpg',
+      isProject:true
+    },
+    {
       name: 'About',
       href: '/about',
       isProject:false

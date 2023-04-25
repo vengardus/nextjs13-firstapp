@@ -22,7 +22,7 @@ export const taskValidate = ( { task } ) => {
 export const taskPostValidate = ({ task, action }) => {
     if ( action === ACTIONS.create ) {
         task.id = uuid()
-        task.completed = false
+        task.done = false
     }
     return true
 }
@@ -68,6 +68,22 @@ export const taskPreUpdate = ( { tasks, task, showMsg, action }) => {
     return newTasks
     
 }
+
+export const taskPreUpdateApi = ( { task, showMsg, action }) => {
+    const [ok, msg] = taskValidate({ task })
+
+    if ( !ok ) {
+      showMsg( msg )
+      return false
+    }
+    if ( !taskPostValidate({ task, action }) ) {
+      showMsg( 'Ocurrió un error en PostValidate' )
+      return false
+    }
+
+    return true
+}
+
 
 export const taskPreDelete = ({ tasks, id }) => {
     const newTasks = tasks.filter((task) => task.id !== id)

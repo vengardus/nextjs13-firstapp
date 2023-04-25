@@ -10,7 +10,7 @@ export const ProjectCard = ({ project }) => {
           shadow-lg my-4 hover:bg-gray-300 h-[40rem]
           text-gray-200 hover:text-gray-800
           '>
-        <div className="w-full h-[25rem] bg-red-500 ">
+        <div className="w-full h-[25rem]">
           <Image 
               className='h-full max-h-[28rem] object-fixed'
               src={`/assets/img/projects/${project.image}`} 

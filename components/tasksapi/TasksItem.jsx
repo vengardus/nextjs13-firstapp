@@ -1,20 +1,48 @@
 'use client'
 import { useRouter } from "next/navigation"
 import { ButtonParm } from "../ui/Button"
-import { useTask } from "@/context/TaskContext"
-import { taskPreDelete } from "./taskLogic"
+import { useDeleteFetch } from "@/hooks/useFetch"
+import { useEffect, useState } from "react"
+// import { useTask } from "@/context/TaskContext"
+// import { taskPreDelete } from "./taskLogic"
 
-export const TasksItem = ({ task }) => {
+const URL_TASKS = `http://localhost:8000/tasks/api/v1/tasks/`
+
+export const TasksItem = ({ task, updateRefresh }) => {
   const router = useRouter()
-  const { tasks, deleteTask } = useTask()
+  // const { tasks, deleteTask } = useTask()
+  const [ id, setId ] = useState(null)
+  const [ actionDelete, setActionDelete ] = useState(false)
+  const URL_TASK = `${URL_TASKS}${id}/`
+  const [ , loading, error, status ] = useDeleteFetch({ 
+    url: URL_TASK, 
+    condition:(id && actionDelete) 
+  })
+
+  useEffect(() => {
+    if ( actionDelete ) {
+      console.log('statusPost', status)
+      if ( error )
+        console.log(`Ocurrió un error: ${error}`)
+      if ( status == 204 ) {
+        console.log('Delete OK!!!!')
+      }
+      if ( status ) {
+        setActionDelete(false)
+        updateRefresh() // para forzar useFetch:getFetch
+      }
+    }
+  }, [ actionDelete, error, status, updateRefresh ])
 
   const handleEdit = () => {
     router.push(`/tasksapi/${task.id}`)
   }
 
   const handleDelete = (e, id) => {
-    const newTasks = taskPreDelete({ tasks, id })
-    deleteTask({ newTasks })
+    // const newTasks = taskPreDelete({ tasks, id })
+    // deleteTask({ newTasks })
+    setId(id)
+    setActionDelete(true)
     e.stopPropagation()
   }
 

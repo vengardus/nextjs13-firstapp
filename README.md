@@ -145,3 +145,7 @@ Enables managing variables globally among components.
 /context/TaskContext.js
 
 
+## Task using tasks/api/v1 (Django, DRF)
+ yarn add react-hot-toast 
+
+
