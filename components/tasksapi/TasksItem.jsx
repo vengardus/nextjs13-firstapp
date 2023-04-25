@@ -3,8 +3,7 @@ import { useRouter } from "next/navigation"
 import { ButtonParm } from "../ui/Button"
 import { useDeleteFetch } from "@/hooks/useFetch"
 import { useEffect, useState } from "react"
-// import { useTask } from "@/context/TaskContext"
-// import { taskPreDelete } from "./taskLogic"
+import { Toast, toast } from "react-hot-toast"
 
 const URL_TASKS = `http://localhost:8000/tasks/api/v1/tasks/`
 
@@ -21,11 +20,11 @@ export const TasksItem = ({ task, updateRefresh }) => {
 
   useEffect(() => {
     if ( actionDelete ) {
-      console.log('statusPost', status)
       if ( error )
-        console.log(`Ocurrió un error: ${error}`)
+        toast.error(`Ocurrió un error: ${error}`)
+
       if ( status == 204 ) {
-        console.log('Delete OK!!!!')
+        toast.success('Tarea eliminada.')
       }
       if ( status ) {
         setActionDelete(false)

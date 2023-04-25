@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { taskPreCreate, taskPreUpdateApi } from "@/components/tasks/taskLogic";
 import { ACTIONS } from '@/app/data'
 import { useGetFetch, usePostFetch } from '@/hooks/useFetch'
+import { Toast, toast } from 'react-hot-toast';
 
 const initialTaskInput = {
     title: '',
@@ -51,20 +52,18 @@ export const TasksForm = ({ action, id }) => {
   // save (create or update)
   useEffect(()=> {
     if ( save ) {
-      console.log('Save verify')
-      console.log('errorPost', errorPost)
-      console.log('statusPost', statusPost)
       if ( errorPost )
         setMsg(`Ocurrió un error: ${errorPost}`)
+
       if ( statusPost == 201 || statusPost == 200 ) {
-        console.log('Save OK!!!!')
+        toast.success((action==ACTIONS.create)? 'Tarea grabada!!!' : 'Tarea actualizada!!!')
         router.push('/tasksapi')
       }
       if ( statusPost )
         setSave(false)
     }
     
-  }, [errorPost, loadingPost, statusPost, save, router])
+  }, [errorPost, statusPost, save, router, action])
 
   // change input
   const handleChange = (e) => {
