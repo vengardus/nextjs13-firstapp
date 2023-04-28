@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 
+// GET Request
 const getFetch = async (url) => {
   const response = {
     data: null,
@@ -15,37 +16,39 @@ const getFetch = async (url) => {
     console.log('Error!:', error.message)
     response.error = error.message
   }
+
   return response
 }
 
-export const useGetFetch = ({ url, condition=true, refresh }) => {
+export const useGetFetch = ({ 
+    isEnabled=true, 
+    isRefresh=false,
+    url 
+  }) => {
   const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [msgError, setMsgError] = useState(null)
   const [status, setStatus] = useState(0)
 
-  console.log('USEGETFETCH')
   // useEffect no debe ser async
   useEffect(() => {
     const getRequest = async ()=> {
       const response = await getFetch(url)
       setData(response.data)
-      setLoading(false)
-      setError(response.error)
+      setIsLoading(false)
+      setMsgError(response.error)
       setStatus(response.status)
     }
 
-    if ( condition ) {
-      console.log('DO GETFETCH')
-      getRequest()
-    }
+    if ( isEnabled ) getRequest()
+    
+  }, [url, isEnabled, isRefresh])
 
-  }, [url, condition, refresh])
-
-  return [data, loading, error, status]
+  return [data, isLoading, msgError, status]
 }
 
-/* Post */
+
+/* POST, PUT request */
 const postFetch = async (url, data, method) => {
   const response = {
     data: null,
@@ -60,8 +63,6 @@ const postFetch = async (url, data, method) => {
     body: JSON.stringify(data)
   }
 
-  console.log(requestInit)
-
   try {
     const resp = await fetch(url, requestInit)
     response.data = await resp.json()
@@ -73,34 +74,36 @@ const postFetch = async (url, data, method) => {
   return response
 }
 
-export const usePostFetch = ({ url, condition=false, dataSend, method }) => {
+export const usePostFetch = ({ 
+    dataSend, 
+    isEnabled=false, 
+    method, /* POST, PUT */
+    url 
+  }) => {
   const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [msgError, setMsgError] = useState(null)
   const [status, setStatus] = useState(0)
 
   // useEffect no debe ser async
   useEffect(() => {
     const postRequest = async ()=> {
-      console.log('Fetch Post')
       const response = await postFetch(url, dataSend, method)
       setData(response.data)
-      setLoading(false)
-      setError(response.error)
+      setIsLoading(false)
+      setMsgError(response.error)
       setStatus(response.status)
-      console.log('reponseError', response.error)
-      console.log('reponseError', response.status)
     }
 
-    if ( condition )
-      postRequest()
+    if ( isEnabled ) postRequest()
 
-  }, [url, condition, dataSend])
+  }, [url, isEnabled, dataSend, method])
 
-  return [data, loading, error, status]
+  return [data, isLoading, msgError, status]
 }
 
-/* Delete */
+
+/* DELETE request  */
 const deleteFetch = async (url) => {
   const response = {
     data: null,
@@ -111,12 +114,8 @@ const deleteFetch = async (url) => {
     method: 'DELETE',
   }
 
-  console.log(requestInit)
-  console.log(url)
-
   try {
     const resp = await fetch(url, requestInit)
-    console.log('RESP', resp)
     //response.data = await resp.json() NOt return content
     response.status = resp.status
   } catch (error) {
@@ -126,10 +125,13 @@ const deleteFetch = async (url) => {
   return response
 }
 
-export const useDeleteFetch = ({ url, condition=true }) => {
+export const useDeleteFetch = ({ 
+    isEnabled=true,
+    url
+  }) => {
   const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [msgError, setMsgError] = useState(null)
   const [status, setStatus] = useState(0)
 
   // useEffect no debe ser async
@@ -137,15 +139,14 @@ export const useDeleteFetch = ({ url, condition=true }) => {
     const deleteRequest = async ()=> {
       const response = await deleteFetch(url)
       setData(response.data)
-      setLoading(false)
-      setError(response.error)
+      setIsLoading(false)
+      setMsgError(response.error)
       setStatus(response.status)
     }
 
-    if ( condition )
-      deleteRequest()
+    if ( isEnabled ) deleteRequest()
 
-  }, [url, condition])
+  }, [url, isEnabled])
 
-  return [data, loading, error, status]
+  return [data, isLoading, msgError, status]
 }

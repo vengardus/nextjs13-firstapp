@@ -10,16 +10,19 @@ const URL_TASKS = 'http://localhost:8000/tasks/api/v1/tasks/'
 
 export const TasksList = () => {
   const router = useRouter()
-  const [refresh, setRefresh ] = useState(false)
-  const [ tasks, loading, error, status ] = useGetFetch({ url: URL_TASKS, refresh})
+  const [isRefresh, setIsRefresh ] = useState(false)
+  const [ tasks, isLoading, msgError, status ] = useGetFetch({ 
+    url: URL_TASKS, 
+    isRefresh
+  })
 
   const handleNew = () => {
     router.push('/tasksapi/new')
   }
 
   const updateRefresh = () => {
-    // utilizado para forzar getFetch en useFetch cuando se haga un Delete
-    setRefresh(!refresh)
+    // utilizado para forzar getFetch en useFetch cuando se haga el Delete
+    setIsRefresh(!isRefresh)
   }
 
   return (
@@ -27,8 +30,8 @@ export const TasksList = () => {
       <div className="flex space-x-7  w-4/5 md:w-1/2 place-self-center">
         <h1 className="text-4xl font-bold flex w-4/5">Tareas</h1>
         <Button 
-          handleClick={handleNew}
           className={'flex space-x-2 px-1 py-1 justify-end'}
+          handleClick={handleNew}
           >
           <span>Nueva</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -38,11 +41,11 @@ export const TasksList = () => {
         
       </div>
       {
-        loading
+        isLoading
           ? <div>Loading...</div>
           :
-          error
-          ? <div>Ocurrió un error: { error }</div>
+          msgError
+          ? <div>Ocurrió un error: { msgError }</div>
           :
           !tasks.length
           ? <div className="flex justify-center pt-3">No hay tareas</div>

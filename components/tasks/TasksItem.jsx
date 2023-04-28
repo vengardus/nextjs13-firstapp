@@ -9,7 +9,7 @@ export const TasksItem = ({ task }) => {
   const { tasks, deleteTask } = useTask()
 
   const handleEdit = () => {
-    router.push(`/tasksapi/${task.id}`)
+    router.push(`/tasks/${task.id}`)
   }
 
   const handleDelete = (e, id) => {

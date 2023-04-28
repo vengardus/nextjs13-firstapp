@@ -43,7 +43,7 @@ export const navigation = [
       title: 'Tasks fetch Api',
       description: 'Registro de tareas llamando Api',
       detail:'Utiliza la api de la app django-crud-api',
-      image:'tasks3.jpg',
+      image:'tasks.png',
       isProject:true
     },
     {

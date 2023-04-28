@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { taskPreCreate, taskPreUpdateApi } from "@/components/tasks/taskLogic";
 import { ACTIONS } from '@/app/data'
 import { useGetFetch, usePostFetch } from '@/hooks/useFetch'
-import { Toast, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 const initialTaskInput = {
     title: '',
@@ -14,6 +14,10 @@ const initialTaskInput = {
     done: false
 }
 const URL_TASKS = `http://localhost:8000/tasks/api/v1/tasks/`
+const REQUEST_ACTIONS = {
+  post: 'POST',
+  put: 'PUT'
+}
 
 export const TasksForm = ({ action, id }) => {
   const router = useRouter()
@@ -21,24 +25,23 @@ export const TasksForm = ({ action, id }) => {
   const [taskInput, setTaskInput] = useState(initialTaskInput)
 
   const URL_TASK = `${URL_TASKS}${id}/`
-  const [task, loading, error] = useGetFetch({ 
-    url:URL_TASK, 
-    condition:action==ACTIONS.update 
+  const [task, isLoading, msgError] = useGetFetch({ 
+    isEnabled:  action==ACTIONS.update, 
+    url:        URL_TASK, 
   })
   
   const [ save, setSave ] = useState(false)
   const [ taskToSave, setTaskToSave ] = useState({})
-  const [ , loadingPost, errorPost, statusPost] = usePostFetch({ 
-    url:(action==ACTIONS.create)? URL_TASKS : URL_TASK, 
-    dataSend:taskToSave, 
-    condition:save, 
-    method:(action==ACTIONS.create)? 'POST':'PUT' 
+  const [ , isLoadingPost, msgErrorPost, statusPost] = usePostFetch({ 
+    isEnabled: save, 
+    dataSend: taskToSave, 
+    method:   (action==ACTIONS.create)? REQUEST_ACTIONS.post : REQUEST_ACTIONS.put, 
+    url:      (action==ACTIONS.create)? URL_TASKS : URL_TASK
   })
   
   
   // Carga task si action es update
   useEffect(() => {
-    console.log(action, task)
     if ( action == ACTIONS.update && task ) {
       setTaskInput({
         id: task.id,
@@ -52,18 +55,17 @@ export const TasksForm = ({ action, id }) => {
   // save (create or update)
   useEffect(()=> {
     if ( save ) {
-      if ( errorPost )
-        setMsg(`Ocurrió un error: ${errorPost}`)
-
+      if ( msgErrorPost ) setMsg(`Ocurrió un error: ${ msgErrorPost }`)
+      
       if ( statusPost == 201 || statusPost == 200 ) {
         toast.success((action==ACTIONS.create)? 'Tarea grabada!!!' : 'Tarea actualizada!!!')
         router.push('/tasksapi')
       }
-      if ( statusPost )
-        setSave(false)
+
+      if ( statusPost ) setSave( false )
     }
     
-  }, [errorPost, statusPost, save, router, action])
+  }, [ msgErrorPost, statusPost, save, router, action ])
 
   // change input
   const handleChange = (e) => {
@@ -83,11 +85,11 @@ export const TasksForm = ({ action, id }) => {
   const showMsg = (value) => {
     setMsg(value)
   }
-
+  
   const handleSubmit = (e) => {
     e.preventDefault()
     const task = { ...taskInput }
-
+    
     // create
     if (action == ACTIONS.create) {
       if (taskPreCreate({ task, showMsg, action })) {
@@ -107,38 +109,38 @@ export const TasksForm = ({ action, id }) => {
    
   }
 
-  if ( action == ACTIONS.update && loading) 
+  if ( action == ACTIONS.update && isLoading) 
     return <div>Loading...</div>
   
-  if ( action == ACTIONS.update && error) 
-    return <div>Ocurrió un error: { error }</div>
+  if ( action == ACTIONS.update && msgError) 
+    return <div>Ocurrió un error: { msgError }</div>
 
   return (
     <div className='flex justify-center my-7'>
       <form onSubmit={(e)=> e.preventDefault() } className='flex flex-col space-y-3 m-3 w-4/5 md:w-3/5 bg-gray-800 p-5'>
         <label className='flex place-self-start'>Título:</label>
         <input
-          name={'title'}
-          id={'title'}
-          value={taskInput.title}
           className='text-black px-2'
+          id={'title'}
+          name={'title'}
           onChange={handleChange}
+          value={taskInput.title}
           
         />
         <label>Descrpción:</label>
         <input
-          name={'description'}
-          value={taskInput.description}
-          onChange={handleChange}
           className='text-black px-2'
+          name={'description'}
+          onChange={handleChange}
+          value={taskInput.description}
           
         />
         <p className='text-red-500'>{msg}</p>
         <div className='flex space-x-10 justify-end pt-3'>
           <button
-            type='button'
-            onClick={ handleCancel }
             className='hover:text-red-400'
+            onClick={ handleCancel }
+            type='button'
           >
             Regresar
           </button>

@@ -3,43 +3,38 @@ import { useRouter } from "next/navigation"
 import { ButtonParm } from "../ui/Button"
 import { useDeleteFetch } from "@/hooks/useFetch"
 import { useEffect, useState } from "react"
-import { Toast, toast } from "react-hot-toast"
+import { toast } from "react-hot-toast"
 
 const URL_TASKS = `http://localhost:8000/tasks/api/v1/tasks/`
 
 export const TasksItem = ({ task, updateRefresh }) => {
   const router = useRouter()
-  // const { tasks, deleteTask } = useTask()
   const [ id, setId ] = useState(null)
   const [ actionDelete, setActionDelete ] = useState(false)
   const URL_TASK = `${URL_TASKS}${id}/`
-  const [ , loading, error, status ] = useDeleteFetch({ 
-    url: URL_TASK, 
-    condition:(id && actionDelete) 
+  const [ , isLoading, msgError, status ] = useDeleteFetch({ 
+    isEnabled:  (id && actionDelete), 
+    url:        URL_TASK, 
   })
 
   useEffect(() => {
     if ( actionDelete ) {
-      if ( error )
-        toast.error(`Ocurrió un error: ${error}`)
+      if ( msgError ) toast.error(`Ocurrió un error: ${ msgError }`)
 
-      if ( status == 204 ) {
-        toast.success('Tarea eliminada.')
-      }
+      if ( status == 204 ) toast.success('Tarea eliminada.')
+      
       if ( status ) {
-        setActionDelete(false)
+        setActionDelete( false )
         updateRefresh() // para forzar useFetch:getFetch
       }
     }
-  }, [ actionDelete, error, status, updateRefresh ])
+  }, [ actionDelete, msgError, status, updateRefresh ])
 
   const handleEdit = () => {
     router.push(`/tasksapi/${task.id}`)
   }
 
   const handleDelete = (e, id) => {
-    // const newTasks = taskPreDelete({ tasks, id })
-    // deleteTask({ newTasks })
     setId(id)
     setActionDelete(true)
     e.stopPropagation()
@@ -48,15 +43,15 @@ export const TasksItem = ({ task, updateRefresh }) => {
   return (
     <div
       className="rounded-lg border-2 border-green-900 p-4 w-4/5 md:w-1/2 bg-gray-800 hover:bg-gray-600 hover:text-white flex flex-col space-y-3"
-      onClick={handleEdit}
+      onClick={ handleEdit }
     >
       <div className="font-bold text-2xl">{task.title}</div>
       <div className="italic text-lg">{task.description}</div>
 
       <ButtonParm
-        handleClick={handleDelete}
-        parm={task.id}
         className={'flex place-self-center'}
+        handleClick={ handleDelete }
+        parm={ task.id }
       >
         <div className="flex space-x-3">
           <span>Eliminar</span>
