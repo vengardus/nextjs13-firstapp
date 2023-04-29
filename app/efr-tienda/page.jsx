@@ -1,10 +1,11 @@
-import { ProductsList } from '@/components/efrtienda/ProductsList'
-import React from 'react'
+import { About } from '@/components/efrtienda/About'
+import { CategoriesList } from '@/components/efrtienda/CategoriesList'
 
 const EFRTiendaPage = () => {
   return (
     <div className='bg-white text-black'>
-      <ProductsList />
+      <About />
+      <CategoriesList />
     </div>
   )
 }

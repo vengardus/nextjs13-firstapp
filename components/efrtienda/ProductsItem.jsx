@@ -26,7 +26,7 @@ export const ProductsItem = ({ product }) => {
         />
       </div>
 
-      <div className="text-2sm font-bold uppercase">
+      <div className="text-[15px] font-bold uppercase text-center">
         {product.attributes.name}
       </div>
 
@@ -35,11 +35,22 @@ export const ProductsItem = ({ product }) => {
       </div> */}
 
       {
-        <div className="flex space-x-3 text-xl font-bold">
+        <div className="flex space-x-3 text-[1.17em] font-bold">
           <span>{currencySymbol}</span>
-          <span>{product.attributes.price}</span>
+          <span>{product.attributes.price.toFixed(2)}</span>
         </div>
       }
+
+      <div className="flex box-border border-2 p-[10px] font-[15px] text-green-600 font-opensans shadow-gray-700 shadow-sm items-center space-x-2">
+        <Image 
+          alt="wsp"
+          className="bg-green-200"
+          height={20}          
+          src={'/assets/img/ui/whatsapp.svg'}
+          width={20}
+        />
+        <span className="">LO QUIERO</span>
+      </div>
     </div>
   )
 }

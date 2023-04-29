@@ -6,11 +6,19 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    fontSize: {
+      title: '36px',
+    },
     fontFamily: {
-      sans: ['Graphik', 'sans-serif'],
+      // sans: ['Graphik', 'sans-serif'],
+      oswald: ['Oswald', 'sans-serif'],
       serif: ['Merriweather', 'serif'],
+      opensans: ['Open Sans', 'san-serif'],
     },
     extend: {
+      colors: {
+        'title-orange': '#c04000',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':

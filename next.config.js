@@ -21,6 +21,11 @@ const nextConfig = {
         hostname: 'qmartek.com',
         pathname: '/**/**/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'qmartek.com',
+        pathname: '/**/**',
+      },
      
     ],
   },
