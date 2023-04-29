@@ -42,8 +42,17 @@ export const navigation = [
       href: '/tasksapi',
       title: 'Tasks fetch Api',
       description: 'Registro de tareas llamando Api',
-      detail:'Utiliza la api de la app django-crud-api',
+      detail:'Utiliza api de la app django-crud-api (repositorio). Modo local por ahora, pendiente subir a hosting app Django',
       image:'tasks.png',
+      isProject:true
+    },
+    {
+      name: 'EFR-Tienda',
+      href: '/efr-tienda',
+      title: 'EFR-Tienda',
+      description: 'Sitio Web de venta de equipos biométricos y captura de datos.',
+      detail:'Utilizará api creada con Strapi (strapi-demo), estará alojada en Render.com',
+      image:'biometria.jpg',
       isProject:true
     },
     {

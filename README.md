@@ -149,3 +149,5 @@ Enables managing variables globally among components.
  yarn add react-hot-toast 
 
 
+## Stripe : Create app postgres deploy
+https://youtu.be/akvItcWW81g
