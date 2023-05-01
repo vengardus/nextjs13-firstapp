@@ -1,31 +1,5 @@
 import Image from "next/image"
-
-const aboutDetails = [
-  {
-    item: '1',
-    title: 'Experiencia',
-    detail: 'Somos profesionales con más de 22 años de experiencia en implantar soluciones tecnológicas acorde a las necesidades de nuestros clientes.'
-  },
-  {
-    item: '2',
-    title: 'Tecnología',
-    detail: 'A la vanguardia en el desarrollo e integración de productos y soluciones de captura automatizada de información mediante: códigos de barra, códigos QR, biometría para asistencia y acceso, inventarios patrimoniales y de almacén, identificación, video vigilancia y desarrollo a la medida mobile, web ó PC.'
-  },
-  {
-    item: '3',
-    title: 'Soluciones',
-    detail: 'Brindamos soluciones comerciales y servicios para:',
-    detailItems: [
-      'Controlar la asistencia de su personal',
-      'Inventario de sus activos fijos, bienes muebles y almacenes',
-      'Software para gestión de sus Activos Fijos',
-      'Controlar el acceso del personal y video vigilancia',
-      'Equipos para punto de venta',
-      'Desarrollo de Software a Medida',
-    ]
-  },
-
-]
+import { aboutDetails } from "./data"
 
 export const About = () => {
   return (
@@ -43,12 +17,15 @@ export const About = () => {
         />
       </div>
 
-      <div className="py-2 px-8 md:w-9/12">
+      <div className="py-2 pl-2 pr-6 md:px-8 md:w-9/12">
         <div className="flex flex-col space-y-8">
           {
             aboutDetails.map(item => (
               <>
-                <div className="flex flex-col space-y-4">
+                <div 
+                  className="flex flex-col space-y-4"
+                  key={item.item}
+                >
                   <div className="flex space-x-1 items-center">
                     <div className="rounded-full bg-orange-400 text-white text-center w-[30px] height-[30px] p-[2px] shadow-sm shadow-gray-200">
                       {item.item}
