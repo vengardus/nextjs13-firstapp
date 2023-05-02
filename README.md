@@ -2,7 +2,7 @@
 I'm currently learning the Beta version of NextJs 13 and will be practicing and adding code.
 * url: https://nextjs13-firstproject.vercel.app/
 
-## Enviroment
+## Environment
 Ubuntu 22.04
 
 ## Requirements:
